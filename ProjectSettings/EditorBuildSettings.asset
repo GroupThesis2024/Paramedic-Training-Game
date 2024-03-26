@@ -7,3 +7,4 @@ EditorBuildSettings:
   m_Scenes: []
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 2d491b9030028d841bb9b16f05d538bf, type: 2}
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 5167f50d921727643983d56eff85df15, type: 2}
