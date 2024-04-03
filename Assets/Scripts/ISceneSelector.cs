@@ -5,9 +5,5 @@ namespace SceneSelector
         void LoadScenarioBusAccident();
 
         void LoadMainMenu();
-
-        string GetActiveSceneName();
-
-        bool IsSceneLoaded(string sceneName);
     }
 }
