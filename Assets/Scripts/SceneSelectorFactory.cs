@@ -7,10 +7,10 @@ namespace SceneSelector
         public ISceneSelector GetSceneSelector()
         {
             // Create the scene selector
-            var sceneSelectorObject = new GameObject("SceneSelector");
+            GameObject sceneSelectorObject = new GameObject("SceneSelector");
 
             // Attach the SceneManager script to the GameObject
-            var sceneSelector = sceneSelectorObject.AddComponent<SceneSelector.SceneManager>();
+            SceneManager sceneSelector = sceneSelectorObject.AddComponent<SceneSelector.SceneManager>();
 
             return sceneSelector;
         }
