@@ -4,7 +4,7 @@ namespace SceneSelector
 {
     public class SceneManager : MonoBehaviour, ISceneSelector
     {
-        public enum SceneName
+        private enum SceneName
         {
             XRTest,
             DevTest,
