@@ -2,9 +2,9 @@ using UnityEngine;
 
 namespace SceneSelector
 {
-    public class SceneSelectorFactory
+    public static class SceneSelectorFactory
     {
-        public ISceneSelector GetSceneSelector()
+        public static ISceneSelector GetSceneSelector()
         {
             // Create the scene selector
             GameObject sceneSelectorObject = new GameObject("SceneSelector");
