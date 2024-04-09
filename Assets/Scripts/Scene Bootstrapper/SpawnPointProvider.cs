@@ -1,12 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnPointProvider : MonoBehaviour, ISpawnPointProvider
+public class SpawnPointProvider : ISpawnPointProvider
 {
     private List<Transform> spawnPoints = new List<Transform>();
     private List<Transform> clonedSpawnPoints;
 
-    private void Awake()
+    public SpawnPointProvider()
+    {
+        FindSpawnPoints();
+    }
+
+    private void FindSpawnPoints()
     {
         GameObject[] spawnPointObjects = GameObject.FindGameObjectsWithTag("PatientSpawnPoint");
         foreach (GameObject spawnPointObject in spawnPointObjects)
