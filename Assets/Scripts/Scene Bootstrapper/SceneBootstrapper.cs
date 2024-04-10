@@ -17,10 +17,10 @@ public class SceneBootstrapper : MonoBehaviour
             return;
         }
 
-        SpawnPrefabsAtRandomPoints(patientPrefabs.Length);
+        SpawnPrefabsAtSpawnPoints(patientPrefabs.Length);
     }
 
-    private void SpawnPrefabsAtRandomPoints(int numPrefabsToSpawn)
+    private void SpawnPrefabsAtSpawnPoints(int numPrefabsToSpawn)
     {
         if (patientPrefabs.Length == 0)
         {
