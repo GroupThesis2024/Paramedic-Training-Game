@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class SceneBootstrapper : MonoBehaviour
 {
-    public GameObject[] patientPrefabs;
+    [SerializeField]
+    private GameObject[] patientPrefabs;
     private ISpawnPointProvider spawnPointProvider;
     private ISpawnPointAdjuster spawnPointAdjuster;
 
