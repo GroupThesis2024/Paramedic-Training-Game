@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnPointProvider : ISpawnPointProvider
+public class SpawnPointFinder
 {
     private List<Transform> spawnPoints = new List<Transform>();
     private List<Transform> clonedSpawnPoints;
 
-    public SpawnPointProvider()
+    public SpawnPointFinder()
     {
         FindSpawnPoints();
     }
