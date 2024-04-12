@@ -1,4 +1,10 @@
-public class PatientSpawnPoint
+using UnityEngine;
+
+namespace LevelLoader
 {
+    public class PatientSpawnPoint : MonoBehaviour
+    {
+
+    }
 
 }
