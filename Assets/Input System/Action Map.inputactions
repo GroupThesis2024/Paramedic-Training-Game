@@ -58,6 +58,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Hide And Lock Cursor",
+                    "type": "Button",
+                    "id": "a460630a-7d9d-45c5-892a-4570d6f33aae",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -128,15 +137,37 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "0fb3afd2-8cfe-4f5e-8252-0e4bd2c32e39",
+                    "name": "Scroll Axis",
+                    "id": "9772d91b-134b-4c6c-a4f8-51cd712aaeca",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "Clamp(min=-1,max=1)",
+                    "groups": "",
+                    "action": "Move Hand",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "positive",
+                    "id": "41fecea2-17c8-4eb5-a6f6-5a7e9f14a920",
+                    "path": "<Mouse>/scroll/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move Hand",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "negative",
+                    "id": "640603de-d874-4e74-9933-cf1650a6ca89",
                     "path": "<Mouse>/scroll/down",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Move Hand",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
                 },
                 {
                     "name": "",
@@ -168,6 +199,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "UI Select",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2d5dc2e0-eb13-484d-811c-0e737e4934bd",
+                    "path": "<Keyboard>/h",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Hide And Lock Cursor",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
