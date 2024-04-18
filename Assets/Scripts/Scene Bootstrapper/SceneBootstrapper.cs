@@ -8,10 +8,8 @@ namespace LevelLoader
     /// </summary>
     public class SceneBootstrapper : MonoBehaviour
     {
-        private enum Spawners
-        {
-            PatientSpawner,
-        }
+        [SerializeField]
+        private string objectSpawnerTag;
 
         private GameObject[] spawnerGameObjects;
 
@@ -28,13 +26,7 @@ namespace LevelLoader
 
         private void TryToGetSubscribedSpawnerGameObjects()
         {
-            string[] spawnersAvailable = Enum.GetNames(typeof(Spawners));
-            int amountOfSpawners = spawnersAvailable.Length;
-            GameObject[] GetSpawnerGameObjectsResult = new GameObject[amountOfSpawners];
-            for (int i = 0; i < amountOfSpawners; i++)
-            {
-                GetSpawnerGameObjectsResult[i] = GameObject.FindGameObjectWithTag(spawnersAvailable[i]);
-            }
+            GameObject[] GetSpawnerGameObjectsResult = GameObject.FindGameObjectsWithTag(objectSpawnerTag);
             EnsureSpawnerGameObjectsAreSet(GetSpawnerGameObjectsResult);
             spawnerGameObjects = GetSpawnerGameObjectsResult;
         }
