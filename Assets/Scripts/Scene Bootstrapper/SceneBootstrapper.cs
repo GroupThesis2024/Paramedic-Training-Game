@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace LevelLoader
@@ -13,13 +14,14 @@ namespace LevelLoader
 
         private GameObject[] spawnerGameObjects;
 
-        private IGameObjectSpawner[] spawnerComponents;
+        private List<IGameObjectSpawner> spawnerComponents = new List<IGameObjectSpawner>();
 
         private GameEvents gameEventsListener;
 
         void Start()
         {
             TryToGetSubscribedSpawnerGameObjects();
+            EnsureSpawnerGameObjectsAreSet();
             TryToGetSpawnerComponents();
             SpawnEverythingInSubscribedSpawners();
         }
@@ -27,63 +29,38 @@ namespace LevelLoader
         private void TryToGetSubscribedSpawnerGameObjects()
         {
             GameObject[] GetSpawnerGameObjectsResult = GameObject.FindGameObjectsWithTag(objectSpawnerTag);
-            EnsureSpawnerGameObjectsAreSet(GetSpawnerGameObjectsResult);
             spawnerGameObjects = GetSpawnerGameObjectsResult;
         }
 
-        private void EnsureSpawnerGameObjectsAreSet(GameObject[] gameObject)
+        private void EnsureSpawnerGameObjectsAreSet()
         {
             /// <summary>Array.IndexOf() returns -1 if no result is found.</summary>
-            bool patientSpawnPointsContainsNull = Array.IndexOf(gameObject, null) != -1;
+            bool patientSpawnPointsContainsNull = Array.IndexOf(spawnerGameObjects, null) != -1;
             if (patientSpawnPointsContainsNull)
             {
-                throw new UnassignedReferenceException("Spawner script/scripts not found. " +
-                "Have Spawner GameObjects been assigned their respectful Spawner scripts?");
+                Debug.LogWarning("Couldn't find any tagged object spawners in the scene. Have you assigned tags correctly to these game objects?");
             }
         }
 
         private void TryToGetSpawnerComponents()
         {
-            int amountOfGameObjects = spawnerGameObjects.Length;
-            IGameObjectSpawner[] GetSpawnerComponentsResult = new IGameObjectSpawner[amountOfGameObjects];
-            for (int i = 0; i < amountOfGameObjects; i++)
+            foreach (GameObject GameObjectTaggedAsSpawner in spawnerGameObjects)
             {
-                GetSpawnerComponentsResult[i] = (IGameObjectSpawner)spawnerGameObjects[i].GetComponent(typeof(IGameObjectSpawner));
-            }
-            EnsureSpawnerComponentsAreSet(GetSpawnerComponentsResult);
-            spawnerComponents = GetSpawnerComponentsResult;
-        }
-
-        private void EnsureSpawnerComponentsAreSet(IGameObjectSpawner[] gameObject)
-        {
-            /// <summary>Array.IndexOf() returns -1 if no result is found.</summary>
-            bool patientSpawnPointsContainsNull = Array.IndexOf(gameObject, null) != -1;
-            if (patientSpawnPointsContainsNull)
-            {
-                throw new UnassignedReferenceException("Incorrect Spawner script. " +
-                "Do all Spawner scripts implement IGameObjectSpawner interface?");
+                IGameObjectSpawner foundSpawnerInterfaceInTaggedGameObject =
+                GameObjectTaggedAsSpawner.GetComponent<IGameObjectSpawner>();
+                if (foundSpawnerInterfaceInTaggedGameObject != null)
+                {
+                    spawnerComponents.Add(foundSpawnerInterfaceInTaggedGameObject);
+                }
             }
         }
 
         private void SpawnEverythingInSubscribedSpawners()
         {
-            bool spawnersComponentsArrayIsEmpty = spawnerComponents.Length == 0;
-            if (spawnersComponentsArrayIsEmpty)
+            foreach (IGameObjectSpawner spawner in spawnerComponents)
             {
-                ThrowGameObjectSpawnerNotAssignedError();
+                spawner.SpawnEverything();
             }
-            else
-            {
-                foreach (IGameObjectSpawner spawner in spawnerComponents)
-                {
-                    spawner.SpawnEverything();
-                }
-            }
-        }
-
-        private void ThrowGameObjectSpawnerNotAssignedError()
-        {
-            throw new UnassignedReferenceException("Subscribed spawners not found. Has SceneBootstrapper been assigned a Spawner in the inspector?");
         }
     }
 }
