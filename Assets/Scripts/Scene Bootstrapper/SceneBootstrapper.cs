@@ -21,7 +21,6 @@ namespace LevelLoader
         void Start()
         {
             TryToGetSubscribedSpawnerGameObjects();
-            EnsureSpawnerGameObjectsAreSet();
             TryToGetSpawnerComponents();
             SpawnEverythingInSubscribedSpawners();
         }
@@ -30,16 +29,6 @@ namespace LevelLoader
         {
             GameObject[] GetSpawnerGameObjectsResult = GameObject.FindGameObjectsWithTag(objectSpawnerTag);
             spawnerGameObjects = GetSpawnerGameObjectsResult;
-        }
-
-        private void EnsureSpawnerGameObjectsAreSet()
-        {
-            /// <summary>Array.IndexOf() returns -1 if no result is found.</summary>
-            bool patientSpawnPointsContainsNull = Array.IndexOf(spawnerGameObjects, null) != -1;
-            if (patientSpawnPointsContainsNull)
-            {
-                Debug.LogWarning("Couldn't find any tagged object spawners in the scene. Have you assigned tags correctly to these game objects?");
-            }
         }
 
         private void TryToGetSpawnerComponents()
