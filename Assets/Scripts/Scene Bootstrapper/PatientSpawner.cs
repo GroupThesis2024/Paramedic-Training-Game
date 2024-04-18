@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
@@ -21,7 +22,7 @@ namespace LevelLoader
 
         private GameObject[] patientSpawnPointGameObjects;
 
-        private PatientSpawnPoint[] patientSpawnPoints;
+        private List<PatientSpawnPoint> patientSpawnPoints = new List<PatientSpawnPoint>();
 
         void Awake()
         {
@@ -51,86 +52,57 @@ namespace LevelLoader
 
         private void Start()
         {
-            TryToGetPatientSpawnPoints();
+            TryToGetPatientSpawnPointsWithTag();
             TryToGetPatientPrefabHeightOffset();
             float[] distancesFromSurface = TryToGetDistanceFromSurfaceForGameObjects();
             CalculatePatientSpawnPointsWithOffsets(distancesFromSurface);
         }
 
-        private void TryToGetPatientSpawnPoints()
+        private void TryToGetPatientSpawnPointsWithTag()
         {
-            TryToGetPatientSpawnPointGameObjectsWithTag();
-            TryToGetPatientSpawnPointComponents();
-        }
-
-
-        private void TryToGetPatientSpawnPointGameObjectsWithTag()
-        {
-            GameObject[] findPatientSpawnPointGameObjectResult = GameObject.FindGameObjectsWithTag(patientSpawnPointTag);
-            EnsurePatientSpawnPointGameObjectsAreSet(findPatientSpawnPointGameObjectResult);
-            patientSpawnPointGameObjects = findPatientSpawnPointGameObjectResult;
-        }
-
-        private void EnsurePatientSpawnPointGameObjectsAreSet(GameObject[] gameObjects)
-        {
-            bool patientSpawnPointGameObjectsAreNullOrEmpty = gameObjects == null || gameObjects.Length == 0;
-            if (patientSpawnPointGameObjectsAreNullOrEmpty)
+            patientSpawnPointGameObjects = GameObject.FindGameObjectsWithTag(patientSpawnPointTag);
+            foreach (GameObject patientSpawnPointGameObject in patientSpawnPointGameObjects)
             {
-                throw new UnityException("GameObjects not found with tag: " + patientSpawnPointTag +
-                ". Have GameObjects holding PatientSpawnPoint script been assigned a correct tag?");
-            }
-        }
-
-        private void TryToGetPatientSpawnPointComponents()
-        {
-            int lengthOfGameObjectsArray = patientSpawnPointGameObjects.Length;
-            PatientSpawnPoint[] patientSpawnPointComponents = new PatientSpawnPoint[lengthOfGameObjectsArray];
-            for (int i = 0; i < lengthOfGameObjectsArray; i++)
-            {
-                patientSpawnPointComponents[i] = patientSpawnPointGameObjects[i].GetComponent<PatientSpawnPoint>();
-            }
-            EnsurePatientSpawnPointComponentsAreSet(patientSpawnPointComponents);
-            patientSpawnPoints = patientSpawnPointComponents;
-        }
-
-        private void EnsurePatientSpawnPointComponentsAreSet(PatientSpawnPoint[] patientSpawnPoints)
-        {
-            /// <summary>Array.IndexOf() returns -1 if no result is found.</summary>
-            bool patientSpawnPointsContainsNull = Array.IndexOf(patientSpawnPoints, null) != -1;
-            if (patientSpawnPointsContainsNull)
-            {
-                throw new UnassignedReferenceException("PatientSpawnPoint script/scripts not found. " +
-                "Have PatientSpawnPoint GameObjects been assigned PatientSpawnPoint scripts?");
+                PatientSpawnPoint foundPatientSpawnPointComponents =
+                patientSpawnPointGameObject.GetComponent<PatientSpawnPoint>();
+                if (foundPatientSpawnPointComponents != null)
+                {
+                    patientSpawnPoints.Add(foundPatientSpawnPointComponents);
+                }
             }
         }
 
         private void TryToGetPatientPrefabHeightOffset()
         {
-            Renderer patientPrefabRenderer = TryToGetPatientPrefabRenderer();
-            patientPrefabHeightOffset = TryToGetPatientPrefabBoundsExtentsY(patientPrefabRenderer);
+            Collider patientPrefabCollider = TryToGetPatientPrefabCollider();
+            patientPrefabHeightOffset = TryToGetPatientPrefabBoundsExtentsY(patientPrefabCollider);
         }
 
-        private Renderer TryToGetPatientPrefabRenderer()
+        private Collider TryToGetPatientPrefabCollider()
         {
-            Renderer patientPrefabRenderer = patientPrefab.GetComponent<Renderer>();
-            bool rendererIsNull = patientPrefabRenderer == null;
-            if (rendererIsNull)
+            GameObject prefabToGetColliderOff = Instantiate(patientPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            Collider patientPrefabCollider = prefabToGetColliderOff.GetComponent<Collider>();
+            bool ColliderIsNull = patientPrefabCollider == null;
+            if (ColliderIsNull)
             {
-                throw new UnityException("Renderer for PatientPrefab not found. " +
+                throw new UnityException("Collider for PatientPrefab not found. " +
                     "Ensure that prefab is of suitable type");
             }
-            return patientPrefabRenderer;
+            Destroy(prefabToGetColliderOff);
+            return patientPrefabCollider;
         }
 
-        private float TryToGetPatientPrefabBoundsExtentsY(Renderer patientPrefabRenderer)
+        private float TryToGetPatientPrefabBoundsExtentsY(Collider patientPrefabCollider)
         {
-            bool boundsAreNullOrZero = patientPrefabRenderer.bounds == null || patientPrefabRenderer.bounds.size == Vector3.zero;
+            Debug.Log("bounds: " + patientPrefabCollider.bounds);
+            Debug.Log("size: " + patientPrefabCollider.bounds.size);
+            bool boundsAreNullOrZero = patientPrefabCollider.bounds == null || patientPrefabCollider.bounds.size == Vector3.zero;
             if (boundsAreNullOrZero)
             {
                 throw new UnityException("Bounds for PatientPrefab are: not found / set to zero. " +
                     "Ensure that prefab is of suitable type");
             }
-            return patientPrefabRenderer.bounds.extents.y;
+            return patientPrefabCollider.bounds.extents.y;
         }
 
         private float[] TryToGetDistanceFromSurfaceForGameObjects()
