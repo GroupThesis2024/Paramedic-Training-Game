@@ -94,8 +94,6 @@ namespace LevelLoader
 
         private float TryToGetPatientPrefabBoundsExtentsY(Collider patientPrefabCollider)
         {
-            Debug.Log("bounds: " + patientPrefabCollider.bounds);
-            Debug.Log("size: " + patientPrefabCollider.bounds.size);
             bool boundsAreNullOrZero = patientPrefabCollider.bounds == null || patientPrefabCollider.bounds.size == Vector3.zero;
             if (boundsAreNullOrZero)
             {
