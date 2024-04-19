@@ -12,28 +12,20 @@ namespace LevelLoader
         [SerializeField]
         private string objectSpawnerTag;
 
-        private GameObject[] spawnerGameObjects;
-
         private List<IGameObjectSpawner> spawnerComponents = new List<IGameObjectSpawner>();
 
         private GameEvents gameEventsListener;
 
         void Start()
         {
-            TryToGetSubscribedSpawnerGameObjects();
-            TryToGetSpawnerComponents();
+            TryToGetSpawnerComponentsWithTag();
             SpawnEverythingInSubscribedSpawners();
         }
 
-        private void TryToGetSubscribedSpawnerGameObjects()
+        private void TryToGetSpawnerComponentsWithTag()
         {
             GameObject[] GetSpawnerGameObjectsResult = GameObject.FindGameObjectsWithTag(objectSpawnerTag);
-            spawnerGameObjects = GetSpawnerGameObjectsResult;
-        }
-
-        private void TryToGetSpawnerComponents()
-        {
-            foreach (GameObject GameObjectTaggedAsSpawner in spawnerGameObjects)
+            foreach (GameObject GameObjectTaggedAsSpawner in GetSpawnerGameObjectsResult)
             {
                 IGameObjectSpawner foundSpawnerInterfaceInTaggedGameObject =
                 GameObjectTaggedAsSpawner.GetComponent<IGameObjectSpawner>();
