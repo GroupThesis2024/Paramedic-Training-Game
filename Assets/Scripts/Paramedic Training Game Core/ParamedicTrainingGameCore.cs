@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-public class GameCore
+public class ParamedicTrainingGameCore
 {
 	private List<IGameCoreEventListener> listeners;
 
