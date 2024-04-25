@@ -5,6 +5,7 @@ using UnityEngine;
 public class FollowPlayerHead : MonoBehaviour
 {
  private Transform playerCameraTransform; // Reference to the player's camera transform
+ private Vector3 offsetFromCamera = new Vector3(0f, -0.4f, 1f); //Reference to the position of the player's camera
 
     void Start()
     {
@@ -29,9 +30,11 @@ public class FollowPlayerHead : MonoBehaviour
         if (playerCameraTransform != null)
         {
             // Calculate the direction from the subtitles to the player's camera
-           transform.position  = playerCameraTransform.position + playerCameraTransform.forward*1f;
+            Vector3 targetPosition = playerCameraTransform.position + playerCameraTransform.TransformDirection(offsetFromCamera);
             // Ensure the subtitles face the player's camera
-            transform.rotation = playerCameraTransform.rotation;
+            transform.position = targetPosition;
+            // Ensure the subtitles face the player's camera
+            transform.rotation = Quaternion.LookRotation(playerCameraTransform.forward);
         }
     }
 
