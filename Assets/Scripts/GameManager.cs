@@ -4,15 +4,5 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-	private GameCore gameCore;
-
-	private void Awake()
-	{
-		gameCore = new GameCore();
-	}
-
-	private void Start()
-	{
-		
-	}
+	// TODO: Implement in a later issue
 }
