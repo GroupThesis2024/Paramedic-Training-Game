@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// Responsible for reading inputs and controlling the player instance like a first person character.
@@ -8,6 +9,10 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerFirstPersonController : MonoBehaviour
 {
+	//FOR MAINMENU START
+		private EventSystem eventSystem;
+	//FOR MAINMENU END
+
 	[Header("Rquired References")]
 	[SerializeField]
 	private Camera playerCamera;
@@ -97,6 +102,10 @@ public class PlayerFirstPersonController : MonoBehaviour
 		LockPlayerRigidbodyRotationInAllAxis();
 		AssignStartingPositionForPlayerHand();
 		HideAndLockCursor();
+
+		//FOR MAINMENU START
+		eventSystem = FindObjectOfType<EventSystem>();
+		//FOR MAINMENU END
 	}
 
 	private void LockPlayerRigidbodyRotationInAllAxis()
@@ -238,7 +247,21 @@ public class PlayerFirstPersonController : MonoBehaviour
 	public void OnUISelect(InputAction.CallbackContext inputContext)
 	{
 		// TODO: Not implemented, will be addressed in a later issue
-		throw new NotImplementedException("OnUISelect() action has not been implemented for player yet.");
+		// throw new NotImplementedException("OnUISelect() action has not been implemented for player yet.");
+	 
+	 //FOR MAINMENU START
+	 if (inputContext.performed)
+        {
+            // Check if there's currently a selected UI element
+            if (eventSystem.currentSelectedGameObject != null)
+            {
+                
+                ExecuteEvents.Execute(eventSystem.currentSelectedGameObject, new PointerEventData(eventSystem), ExecuteEvents.pointerClickHandler);
+            }
+        }
+
+		//FOR MAINMENU END
+	
 	}
 
 	/// <summary>

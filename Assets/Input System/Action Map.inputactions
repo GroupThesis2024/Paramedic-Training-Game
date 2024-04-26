@@ -183,7 +183,7 @@
                 {
                     "name": "",
                     "id": "1d47bca0-af83-4a87-bcd2-2b2161fcf701",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -192,7 +192,7 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
+                    "name": "UI Select",
                     "id": "8a647577-7716-4e76-af11-c388ae2279e9",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
