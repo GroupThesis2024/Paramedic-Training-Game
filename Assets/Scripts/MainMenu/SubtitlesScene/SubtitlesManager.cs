@@ -5,6 +5,7 @@ using TMPro;
 
 public class SubtitlesManager : MonoBehaviour
 {
+
    public static SubtitlesManager Instance;
 
     public GameObject subtitlesUI;
@@ -19,6 +20,8 @@ public class SubtitlesManager : MonoBehaviour
         Instance = this;
         // Ensure subtitles UI is initially disabled
         subtitlesUI.SetActive(false);
+
+
     }
 
     void Update()

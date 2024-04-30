@@ -10,7 +10,7 @@ using UnityEngine.EventSystems;
 public class PlayerFirstPersonController : MonoBehaviour
 {
 	//FOR MAINMENU START
-		private EventSystem eventSystem;
+	private PlayerInput playerInput;
 	//FOR MAINMENU END
 
 	[Header("Rquired References")]
@@ -104,7 +104,7 @@ public class PlayerFirstPersonController : MonoBehaviour
 		HideAndLockCursor();
 
 		//FOR MAINMENU START
-		eventSystem = FindObjectOfType<EventSystem>();
+		playerInput = GetComponent<PlayerInput>();
 		//FOR MAINMENU END
 	}
 
@@ -250,13 +250,26 @@ public class PlayerFirstPersonController : MonoBehaviour
 		// throw new NotImplementedException("OnUISelect() action has not been implemented for player yet.");
 	 
 	 //FOR MAINMENU START
-	 if (inputContext.performed)
+	if (inputContext.performed)
         {
-            // Check if there's currently a selected UI element
-            if (eventSystem.currentSelectedGameObject != null)
+            // Check if the left mouse button is pressed
+            if (Mouse.current.leftButton.isPressed)
             {
-                
-                ExecuteEvents.Execute(eventSystem.currentSelectedGameObject, new PointerEventData(eventSystem), ExecuteEvents.pointerClickHandler);
+                // Perform raycast from the center of the screen (assuming VR)
+                Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2f, Screen.height / 2f, 0f));
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit))
+                {
+                    // Check if the ray hits a UI element
+                    if (hit.collider.gameObject.GetComponent<RectTransform>() != null)
+                    {
+                        // Perform UI interaction logic here
+                        Debug.Log("UI Element selected: " + hit.collider.gameObject.name);
+
+                        // You can trigger UI interaction events, change UI states, etc.
+                    }
+                }
             }
         }
 
