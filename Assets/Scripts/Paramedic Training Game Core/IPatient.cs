@@ -6,8 +6,8 @@ public interface IPatient
 {
 	string GetName();
 	byte GetClassification();
-	byte SetClassification();
-	float GetPulse();
-	float GetPulseAtWrist();
-	float GetBreathingRate();
+	void SetClassification(byte classification);
+	int GetPulse();
+	int GetPulseAtWrist();
+	int GetBreathingRate();
 }
