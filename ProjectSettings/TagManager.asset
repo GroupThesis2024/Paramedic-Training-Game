@@ -6,6 +6,8 @@ TagManager:
   tags:
   - PatientSpawnPoint
   - SceneBootstrapSpawner
+  - SubtitlesController
+  - ObjectWithSubtitles
   layers:
   - Default
   - TransparentFX
