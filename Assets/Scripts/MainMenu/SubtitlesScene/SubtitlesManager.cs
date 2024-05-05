@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using System.Collections.Generic;
+
 
 public class SubtitlesManager : MonoBehaviour
 {
@@ -64,10 +64,5 @@ public class SubtitlesManager : MonoBehaviour
         disabledObjects.Add(obj);
     }
 
-    public bool AreSubtitlesDisabledForObject(GameObject obj)
-    {
-        // Check if the object's subtitles are disabled
-        return disabledObjects.Contains(obj);
-    }
 }
 
