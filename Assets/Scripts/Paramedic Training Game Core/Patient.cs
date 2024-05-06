@@ -1,13 +1,27 @@
 using System.Collections.Generic;
+using System.Diagnostics;
+using Newtonsoft.Json;
 
 namespace Backend
 {
     public class Patient : IPatient
     {
+        [JsonProperty]
         private string name;
-        private byte classification;
+
+        [JsonProperty]
+        int consciousnessLevel;
+
+        [JsonProperty]
+        private int classification;
+
+        [JsonProperty]
         private int pulse;
+
+        [JsonProperty]
         private int breathingRate;
+
+        [JsonProperty]
         private List<Condition> conditions = new List<Condition>();
 
         public string GetName()
@@ -15,12 +29,17 @@ namespace Backend
             return name;
         }
 
-        public byte GetClassification()
+        public int GetConsciousnessLevel()
+        {
+            return consciousnessLevel;
+        }
+
+        public int GetClassification()
         {
             return classification;
         }
 
-        public void SetClassification(byte classification)
+        public void SetClassification(int classification)
         {
             this.classification = classification;
         }
@@ -52,8 +71,31 @@ namespace Backend
 
         public void RemoveCondition(Condition condition)
         {
-            Condition conditionToFind = conditions.Find(x => x == condition);
-            conditions.Remove(conditionToFind);
+            Condition conditionToRemove = FindCondition(condition);
+            bool conditionIsNotNull = conditionToRemove != null;
+            if (conditionIsNotNull)
+            {
+                RemoveConditionFromList(condition);
+            }
+            else
+            {
+                Debug.Write($"Condition not found.");
+            }
+        }
+
+        private Condition FindCondition(Condition conditionToFind)
+        {
+            bool conditionsContainConcreteCondition = conditions.Contains(conditionToFind);
+            if (conditionsContainConcreteCondition)
+            {
+                return conditions.Find(conditionToCheck => conditionToCheck == conditionToFind);
+            }
+            return null;
+        }
+
+        private void RemoveConditionFromList(Condition conditionToRemove)
+        {
+            conditions.Remove(conditionToRemove);
         }
     }
 }
