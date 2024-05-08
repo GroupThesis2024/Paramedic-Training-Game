@@ -1,0 +1,43 @@
+[
+   {
+      "name":"Mark",
+      "consciousnessLevel": 1,
+      "classification":0,
+      "pulse":80,
+      "breathingRate":15,
+      "conditions":[
+         {
+            "bodyLocation":"Head",
+            "condition":1,
+            "Id":1
+         },
+         {
+            "bodyLocation":"RightArm",
+            "condition":1,
+            "Id":2
+         }
+      ]
+   },
+   {
+      "name":"Jane",
+      "consciousnessLevel": 0,
+      "classification":1,
+      "pulse":60,
+      "breathingRate":12,
+      "conditions":[
+         {
+            "bodyLocation":"Neck",
+            "condition":6,
+            "Id":1
+         },
+         {
+            "bodyLocation":"LeftLeg",
+            "condition":2,
+            "Id":2
+         }
+      ]
+   }
+]
+     
+  
+  

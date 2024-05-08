@@ -4,5 +4,15 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-	// TODO: Implement in a later issue
+	private ParamedicTrainingGameCore gameCore;
+
+	private void Awake()
+	{
+		gameCore = new ParamedicTrainingGameCore();
+	}
+
+	private void Start()
+	{
+
+	}
 }
