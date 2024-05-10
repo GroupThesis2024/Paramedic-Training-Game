@@ -7,18 +7,40 @@ namespace Backend
 {
     public class PatientFactory
     {
-        private static string filePath = Path.Combine(
+        private static readonly string filePath = Path.Combine(
             Environment.CurrentDirectory,
             "Assets/Scripts/Paramedic Training Game Core",
             "patientData.json"
         );
 
+        private List<IPatient> initializedPatients;
+
+        public event EventHandler PatientsCreated;
+
         public List<IPatient> GetAllPatients()
         {
-            JsonSerializerSettings settings = ConfigureJsonConverterSettings();
-            string jsonAsString = ReadJsonFileToStringFromPath();
-            List<IPatient> patientsList = JsonConvert.DeserializeObject<List<IPatient>>(jsonAsString, settings);
-            return patientsList;
+            return initializedPatients;
+        }
+
+        public void InitializePatients()
+        {
+            InitializePatientsFromJson();
+        }
+
+        private void InitializePatientsFromJson()
+        {
+            try
+            {
+                string jsonAsString = ReadJsonFileToStringFromPath();
+                JsonSerializerSettings settings = ConfigureJsonConverterSettings();
+                initializedPatients = JsonConvert.DeserializeObject<List<IPatient>>(jsonAsString, settings);
+                PatientsCreated?.Invoke(this, EventArgs.Empty);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error initializing patients: {ex.Message}");
+                initializedPatients = new List<IPatient>();
+            }
         }
 
         private JsonSerializerSettings ConfigureJsonConverterSettings()
