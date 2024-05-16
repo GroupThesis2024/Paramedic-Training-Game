@@ -1,18 +1,23 @@
-using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
-
-public class ParamedicTrainingGameCore
+namespace Backend
 {
-	private List<IGameCoreEventListener> listeners;
-
-	public void addListener(IGameCoreEventListener listener)
+	public class ParamedicTrainingGameCore
 	{
-		listeners.Add(listener);
-	}
+		public ParamedicTrainingGameCore(List<IGameEventListener> listeners)
+		{
+			PatientFactory patientFactory = new PatientFactory();
+			patientFactory.InitializePatients();
+			InformEventListeners(listeners);
+		}
 
-	public void newGame()
-	{
-		// TODO
+		private void InformEventListeners(List<IGameEventListener> listeners)
+		{
+			foreach (IGameEventListener eventListener in listeners)
+			{
+				eventListener.OnGameInitialized();
+			}
+		}
 	}
 }
