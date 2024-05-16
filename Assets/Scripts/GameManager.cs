@@ -4,19 +4,22 @@ using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using UnityEngine;
 using Backend;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
 	private ParamedicTrainingGameCore gameCore;
-	List<EventHandler<CustomEventArgs>> eventHandlers = new List<EventHandler<CustomEventArgs>>();
 
 	private void Awake()
 	{
-		gameCore = new ParamedicTrainingGameCore(eventHandlers);
+
 	}
 
 	private void Start()
 	{
-
+		List<IGameEventListener> listeners = new List<IGameEventListener>
+        {
+        };
+		gameCore = new ParamedicTrainingGameCore(listeners);
 	}
 }
