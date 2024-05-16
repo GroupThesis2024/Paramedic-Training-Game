@@ -1,7 +1,5 @@
-﻿namespace Backend
+﻿public interface IGameEventListener
 {
-	public interface IGameEventListener
-	{
-		void OnGameInitialized();
-	}
+	void OnGameInitialized();
 }
+
