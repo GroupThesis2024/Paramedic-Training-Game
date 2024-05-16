@@ -32,7 +32,6 @@ namespace Backend
                 string jsonAsString = ReadJsonFileToStringFromPath();
                 JsonSerializerSettings settings = ConfigureJsonConverterSettings();
                 initializedPatients = JsonConvert.DeserializeObject<List<IPatient>>(jsonAsString, settings);
-                CreateEmptyListOnInvalidInitialization();
             }
             catch (Exception ex)
             {
@@ -55,14 +54,5 @@ namespace Backend
             };
             return settings;
         }
-
-        private void CreateEmptyListOnInvalidInitialization()
-        {
-            if (initializedPatients == null || initializedPatients.Count == 0)
-            {
-                initializedPatients = new List<IPatient>();
-            }
-        }
-
     }
 }
