@@ -1,66 +1,22 @@
-using System;
 using System.Collections.Generic;
-
+using UnityEngine;
 
 namespace Backend
 {
 	public class ParamedicTrainingGameCore
 	{
-		private readonly List<EventHandler<CustomEventArgs>> eventHandlers;
-
-		private PatientFactory patientFactory;
-
-		public event EventHandler<CustomEventArgs> PatientsInitializedSuccesfullyEvent;
-
-		public ParamedicTrainingGameCore(List<EventHandler<CustomEventArgs>> eventHandlers)
+		public ParamedicTrainingGameCore(List<IGameEventListener> listeners)
 		{
-			this.eventHandlers = eventHandlers;
-			SubscribeEventHandlersFromList();
-			SubscribeToPatientFactoryAndInitializePatients();
-			UnSubscribeEventHandlersFromList();
-		}
-
-		private void SubscribeEventHandlersFromList()
-		{
-			foreach (EventHandler<CustomEventArgs> eventHandler in eventHandlers)
-			{
-				PatientsInitializedSuccesfullyEvent += eventHandler;
-			}
-		}
-
-		private void SubscribeToPatientFactoryAndInitializePatients()
-		{
-			patientFactory = new PatientFactory();
-			patientFactory.PatientsCreated += OnPatientsCreated;
+			PatientFactory patientFactory = new PatientFactory();
 			patientFactory.InitializePatients();
-			patientFactory.PatientsCreated -= OnPatientsCreated;
+			InformEventListeners(listeners);
 		}
 
-		private void OnPatientsCreated(object sender, EventArgs e)
+		private void InformEventListeners(List<IGameEventListener> listeners)
 		{
-			NotifySubscribersPatientsCreated();
-		}
-
-		private void NotifySubscribersPatientsCreated()
-		{
-			foreach (Delegate delegateMethod in PatientsInitializedSuccesfullyEvent.GetInvocationList())
+			foreach (IGameEventListener eventListener in listeners)
 			{
-				try
-				{
-					delegateMethod.DynamicInvoke(this, new CustomEventArgs(patientFactory));
-				}
-				catch (Exception ex)
-				{
-					Console.WriteLine($"Exception caught: {ex.Message}");
-				}
-			}
-		}
-
-		private void UnSubscribeEventHandlersFromList()
-		{
-			foreach (EventHandler<CustomEventArgs> eventHandler in eventHandlers)
-			{
-				PatientsInitializedSuccesfullyEvent -= eventHandler;
+				eventListener.OnGameInitialized();
 			}
 		}
 	}
