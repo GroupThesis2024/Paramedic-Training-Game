@@ -15,8 +15,6 @@ namespace Backend
 
         private List<IPatient> initializedPatients;
 
-        public event EventHandler PatientsCreated;
-
         public List<IPatient> GetAllPatients()
         {
             return initializedPatients;
@@ -34,13 +32,19 @@ namespace Backend
                 string jsonAsString = ReadJsonFileToStringFromPath();
                 JsonSerializerSettings settings = ConfigureJsonConverterSettings();
                 initializedPatients = JsonConvert.DeserializeObject<List<IPatient>>(jsonAsString, settings);
-                PatientsCreated?.Invoke(this, EventArgs.Empty);
+                CreateEmptyListOnInvalidInitialization();
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error initializing patients: {ex.Message}");
                 initializedPatients = new List<IPatient>();
             }
+        }
+
+        private string ReadJsonFileToStringFromPath()
+        {
+            string jsonDataOfIPatients = File.ReadAllText(filePath);
+            return jsonDataOfIPatients;
         }
 
         private JsonSerializerSettings ConfigureJsonConverterSettings()
@@ -52,10 +56,13 @@ namespace Backend
             return settings;
         }
 
-        private string ReadJsonFileToStringFromPath()
+        private void CreateEmptyListOnInvalidInitialization()
         {
-            string jsonDataOfIPatients = File.ReadAllText(filePath);
-            return jsonDataOfIPatients;
+            if (initializedPatients == null || initializedPatients.Count == 0)
+            {
+                initializedPatients = new List<IPatient>();
+            }
         }
+
     }
 }
