@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
+using UnityEngine;
 
 namespace Backend
 {
@@ -13,9 +14,9 @@ namespace Backend
             "patientData.json"
         );
 
-        private List<IPatient> initializedPatients;
+        private List<PatientInformation> initializedPatients;
 
-        public List<IPatient> GetAllPatients()
+        public List<PatientInformation> GetAllPatients()
         {
             return initializedPatients;
         }
@@ -30,13 +31,12 @@ namespace Backend
             try
             {
                 string jsonAsString = ReadJsonFileToStringFromPath();
-                JsonSerializerSettings settings = ConfigureJsonConverterSettings();
-                initializedPatients = JsonConvert.DeserializeObject<List<IPatient>>(jsonAsString, settings);
+                initializedPatients = JsonConvert.DeserializeObject<List<PatientInformation>>(jsonAsString);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error initializing patients: {ex.Message}");
-                initializedPatients = new List<IPatient>();
+                Debug.Log($"Error initializing patients: {ex.Message}");
+                initializedPatients = new List<PatientInformation>();
             }
         }
 
@@ -44,15 +44,6 @@ namespace Backend
         {
             string jsonDataOfIPatients = File.ReadAllText(filePath);
             return jsonDataOfIPatients;
-        }
-
-        private JsonSerializerSettings ConfigureJsonConverterSettings()
-        {
-            var settings = new JsonSerializerSettings
-            {
-                Converters = new List<JsonConverter> { new IPatientConverter() }
-            };
-            return settings;
         }
     }
 }
