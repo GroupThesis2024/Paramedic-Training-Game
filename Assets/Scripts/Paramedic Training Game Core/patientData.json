@@ -3,7 +3,8 @@
       "name":"Mark",
       "consciousnessLevel": 1,
       "classification":0,
-      "pulse":80,
+      "heartRate":80,
+      "heartRateAtWrist": 83,
       "breathingRate":15,
       "conditions":[
          {
@@ -22,7 +23,8 @@
       "name":"Jane",
       "consciousnessLevel": 0,
       "classification":1,
-      "pulse":60,
+      "heartRate":60,
+      "heartRateAtWrist": 72,
       "breathingRate":12,
       "conditions":[
          {
