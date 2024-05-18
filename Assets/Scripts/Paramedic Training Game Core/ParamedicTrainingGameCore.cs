@@ -1,18 +1,30 @@
-using System.Collections;
 using System.Collections.Generic;
 
-
-public class ParamedicTrainingGameCore
+namespace Backend
 {
-	private List<IGameCoreEventListener> listeners;
-
-	public void addListener(IGameCoreEventListener listener)
+	public class ParamedicTrainingGameCore
 	{
-		listeners.Add(listener);
-	}
+		private List<PatientInformation> patients;
 
-	public void newGame()
-	{
-		// TODO
+		public ParamedicTrainingGameCore(List<IGameEventListener> listeners)
+		{
+			PatientFactory patientFactory = new PatientFactory();
+			patientFactory.InitializePatients();
+			patients = patientFactory.GetAllPatients();
+			InformEventListeners(listeners);
+		}
+
+		public List<PatientInformation> GetAllPatients()
+		{
+			return patients;
+		}
+
+		private void InformEventListeners(List<IGameEventListener> listeners)
+		{
+			foreach (IGameEventListener eventListener in listeners)
+			{
+				eventListener.OnGameInitialized();
+			}
+		}
 	}
 }

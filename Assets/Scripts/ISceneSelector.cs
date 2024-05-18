@@ -1,9 +1,8 @@
-namespace SceneSelector
+public interface ISceneSelector
 {
-    public interface ISceneSelector
-    {
-        void LoadScenarioBusAccident();
+    public void LoadScenarioBusAccident();
 
-        void LoadMainMenu();
-    }
+    public void LoadMainMenu();
+
+public void QuitApplication();
 }

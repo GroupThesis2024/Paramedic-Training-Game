@@ -4,8 +4,14 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: d2cbd40e2b4c8574ba347af7b051f578
+  - enabled: 1
+    path: Assets/Scenes/ScenarioBusAccident.unity
+    guid: d1ba750b6742d4947ad9e9f05da33b0e
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 7dd3b37827c1d2347a5761cc73f9cee1, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 2d491b9030028d841bb9b16f05d538bf, type: 2}
-    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 310a886f28e544a138b44d8c3cfe78fc, type: 2}
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: c7450d6fac6f49244990b961728a0662, type: 2}

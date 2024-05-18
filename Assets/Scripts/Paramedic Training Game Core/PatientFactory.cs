@@ -2,32 +2,42 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
+using UnityEngine;
 
 namespace Backend
 {
     public class PatientFactory
     {
-        private static string filePath = Path.Combine(
+        private static readonly string filePath = Path.Combine(
             Environment.CurrentDirectory,
             "Assets/Scripts/Paramedic Training Game Core",
             "patientData.json"
         );
 
-        public List<IPatient> GetAllPatients()
+        private List<PatientInformation> initializedPatients;
+
+        public List<PatientInformation> GetAllPatients()
         {
-            JsonSerializerSettings settings = ConfigureJsonConverterSettings();
-            string jsonAsString = ReadJsonFileToStringFromPath();
-            List<IPatient> patientsList = JsonConvert.DeserializeObject<List<IPatient>>(jsonAsString, settings);
-            return patientsList;
+            return initializedPatients;
         }
 
-        private JsonSerializerSettings ConfigureJsonConverterSettings()
+        public void InitializePatients()
         {
-            var settings = new JsonSerializerSettings
+            InitializePatientsFromJson();
+        }
+
+        private void InitializePatientsFromJson()
+        {
+            try
             {
-                Converters = new List<JsonConverter> { new IPatientConverter() }
-            };
-            return settings;
+                string jsonAsString = ReadJsonFileToStringFromPath();
+                initializedPatients = JsonConvert.DeserializeObject<List<PatientInformation>>(jsonAsString);
+            }
+            catch (Exception ex)
+            {
+                Debug.Log($"Error initializing patients: {ex.Message}");
+                initializedPatients = new List<PatientInformation>();
+            }
         }
 
         private string ReadJsonFileToStringFromPath()
