@@ -5,7 +5,8 @@ namespace Backend
     public struct PatientInformation
     {
         public string name { get; set; }
-        public int classification { get; set; }
+        public int trueClassification { get; set; }
+        public int playerGivenClassification { get; set; }
         public int consciousnessLevel { get; set; }
         public float heartRate { get; set; }
         public float heartRateAtWrist { get; set; }
