@@ -6,6 +6,7 @@ namespace Backend
     {
         public string name { get; set; }
         public int classification { get; set; }
+        public int playerGivenClassification { get; set; }
         public int consciousnessLevel { get; set; }
         public float heartRate { get; set; }
         public float heartRateAtWrist { get; set; }
