@@ -12,6 +12,7 @@ public class EvaluationEngine : MonoBehaviour
     public TextMeshPro classificationYellowUiElement;
     public TextMeshPro classificationGreenUiElement;
 
+    private List<PatientInformation> patientInformationList = new List<PatientInformation>();
     private int[] trueClassificationCounts;
     private int[] correctPlayerClassificationCounts;
     private int[] incorrectPlayerClassificationCounts;
@@ -20,16 +21,11 @@ public class EvaluationEngine : MonoBehaviour
 
     void Start()
     {
-        // FetchPatientData();
+        FetchPatientData();
         InitializeClassificationCounts();
-        // ProcessPatientData(patients);
+        ProcessPatientData(patientInformationList);
         CalculateOverallPercentage();
         UpdateEvaluationView();
-    }
-
-    void Update()
-    {
-        // TO-DO: Figure out if needed to keep
     }
 
     private void FetchPatientData()
