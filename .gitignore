@@ -73,3 +73,7 @@ crashlytics-build.properties
 
 # Visual Studio
 .vsconfig
+
+# High Volume Assets
+/[Aa]ssets/High Volume Assets.meta
+/[Aa]ssets/High Volume Assets/*
