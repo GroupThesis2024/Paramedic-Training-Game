@@ -151,9 +151,19 @@ namespace LevelLoader
 
         public void SpawnEverything()
         {
+            List<Vector3> transformPositions = new List<Vector3>();
+            
             foreach (GameObject patientSpawnPointGameObject in patientSpawnPointGameObjects)
             {
-                Instantiate(patientPrefab, patientSpawnPointGameObject.transform.position, Quaternion.identity);
+                // Instantiate(patientPrefab, patientSpawnPointGameObject.transform.position, Quaternion.identity);
+                transformPositions.Add(patientSpawnPointGameObject.transform.position);
+            }
+
+            for (int i = 0; i < transformPositions.Count; i++) 
+            {
+                int rand = UnityEngine.Random.Range(0,transformPositions.Count);
+                Instantiate(patientPrefab, transformPositions[rand], Quaternion.identity);
+                transformPositions.RemoveAt(rand);
             }
         }
     }
