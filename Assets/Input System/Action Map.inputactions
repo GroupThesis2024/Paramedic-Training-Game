@@ -311,7 +311,7 @@
                 },
                 {
                     "name": "Interact Left Hand",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "703c94ae-4992-4d2b-88e0-6f0c4bc2a026",
                     "expectedControlType": "Button",
                     "processors": "",
@@ -320,7 +320,7 @@
                 },
                 {
                     "name": "Interact Right Hand",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "16a5a889-a213-4b01-8135-e41b379ac571",
                     "expectedControlType": "Button",
                     "processors": "",
