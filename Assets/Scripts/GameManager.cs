@@ -6,11 +6,16 @@ using UnityEngine;
 using Backend;
 using System.Linq;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour, IPatientBackendAccess
 {
 	private ParamedicTrainingGameCore gameCore;
 	private ISceneSelector sceneSelector;
 
+
+	public List<PatientInformation> GetAllPatients()
+	{
+		return gameCore.GetAllPatients();
+	}
 	private void Awake()
 	{
 
@@ -30,4 +35,6 @@ public class GameManager : MonoBehaviour
 	{
 		sceneSelector.LoadMainMenu();
 	}
+
+
 }
