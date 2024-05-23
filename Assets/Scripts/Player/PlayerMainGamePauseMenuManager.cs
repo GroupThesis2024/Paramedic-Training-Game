@@ -11,23 +11,17 @@ public class PlayerMainGamePauseMenuManager : MonoBehaviour
 	public Button endGameButton;
 	public Button hideMenuButton;
 	public InputActionProperty toggleMenuVisibilityAction;
+	public EvaluationMenuOpener evaluationMenuOpener;
 
-	private GameManager gameManager;
 	private bool menuIsVisible = false;
 
 
     void Start()
     {
-        GetGameManagerReference();
 		ConfigureButtonOnClickListeners();
 		ConfigureInputActionListeners();
 		HideMenu();
     }
-
-	private void GetGameManagerReference()
-	{
-		gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
-	}
 
 	private void ConfigureButtonOnClickListeners()
 	{
@@ -45,7 +39,8 @@ public class PlayerMainGamePauseMenuManager : MonoBehaviour
 
 	private void EndGame()
 	{
-		gameManager.LoadSceneMainMenu();
+		evaluationMenuOpener.OpenMenu();
+		HideMenu();
 	}
 
 	private void ShowMenu()

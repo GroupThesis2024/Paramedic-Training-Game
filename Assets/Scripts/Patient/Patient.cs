@@ -17,11 +17,14 @@ public class Patient : MonoBehaviour
 	private Transform playerInstance;
 	private bool playerIsWithinProximity = false;
 
+	private Camera mainCamera;
+
 
     void Start()
     {
 		GetPlayerTransformReference();
         ClosePatientInteractionMenu();
+		mainCamera = Camera.main;
     }
 
 	private void GetPlayerTransformReference()
@@ -75,6 +78,6 @@ public class Patient : MonoBehaviour
 
 	private void FaceInteractionMenuParentTowardsMainCamera()
 	{
-		patientInteractionMenuParent.LookAt(Camera.main.transform);
+		patientInteractionMenuParent.LookAt(mainCamera.transform);
 	}
 }
