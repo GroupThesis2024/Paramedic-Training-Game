@@ -28,6 +28,10 @@ namespace LevelLoader
         {
             EnsurePatientPrefabIsSet();
             EnsureSpawnPointTagIsSet();
+            TryToGetPatientSpawnPointsWithTag();
+            TryToGetPatientPrefabHeightOffset();
+            float[] distancesFromSurface = TryToGetDistanceFromSurfaceForGameObjects();
+            CalculatePatientSpawnPointsWithOffsets(distancesFromSurface);
         }
 
         private void EnsurePatientPrefabIsSet()
@@ -52,10 +56,7 @@ namespace LevelLoader
 
         private void Start()
         {
-            TryToGetPatientSpawnPointsWithTag();
-            TryToGetPatientPrefabHeightOffset();
-            float[] distancesFromSurface = TryToGetDistanceFromSurfaceForGameObjects();
-            CalculatePatientSpawnPointsWithOffsets(distancesFromSurface);
+
         }
 
         private void TryToGetPatientSpawnPointsWithTag()

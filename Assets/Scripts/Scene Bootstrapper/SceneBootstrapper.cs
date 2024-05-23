@@ -22,6 +22,7 @@ namespace LevelLoader
             SpawnEverythingInSubscribedSpawners();
         }
 
+
         private void TryToGetSpawnerComponentsWithTag()
         {
             GameObject[] GetSpawnerGameObjectsResult = GameObject.FindGameObjectsWithTag(objectSpawnerTag);
